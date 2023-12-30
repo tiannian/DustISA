@@ -9,8 +9,8 @@ DustISA采用32位指令，所有的指令在内存中需要按照32位对齐。
 指令的32位被划分为如下的形式：
 
 ```
-XXX XXX X    XXXXXX X    XXX  XXXXXX X    XXXXXX XX
-SET CLA NUM0 R0     NUM1 INST R1     NUM2 R2     ATTR
+XXX XXX X    XXXXXX X    XXXXXX X    XXXXXX XX   XXX
+SET CLA NUM0 R0     NUM1 R1     NUM2 R2      ATTR INST
 ```
 
 指令解码器在解析时，需要按照如下规则进行解析：
