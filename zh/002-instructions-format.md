@@ -9,21 +9,40 @@ DustISA采用32位指令，所有的指令在内存中需要按照32位对齐。
 指令的32位被划分为如下的形式：
 
 ```
-XXX XX  X    XXXXXX X    XXXXXX X    XXXXXX XXX  XXX
-SET CLA NUM0 R0     NUM1 R1     NUM2 R2      ATTR INST
+XXX XXX X  XXXXXX XXXXXX XXXXXX XXXXXXX
+SET CLA TY R0     R1     R2     INST
 ```
 
 指令解码器在解析时，需要按照如下规则进行解析：
 
 - SET：区分了不同的子指令集
 - CLA：在子指令集中区分区分指令种类
-- NUM0：如果为1，则R0后的指令被编码为20位立即数
+- TY：如果为1，则R0后的指令被编码为19位立即数
 - R0：0号寄存器或栈空间
-- NUM1：如果为1，则INST后的指令被编码为13位立即数
 - R1: 1号寄存器或栈空间
-- NUM2：如果为1，则R2与ATTR被编码为6位立即数
 - R2: 2号栈空间或寄存器
-- ATTR: 额外的控制参数
+- INST: 额外的控制参数
+
+### 19位长指令
+
+```
+XXX XXX 1  XXXXXX XXXXXXXXXXXXXXXXXXX
+SET CLA TY R0     IMM19
+```
+
+### 13位长指令
+
+```
+XXX XX0 0  XXXXXX XXXXXX XXXXXXXXXXXXX
+SET CLA TY R0     R1     IMM13
+```
+
+### 普通指令
+
+```
+XXX XX1 0  XXXXXX XXXXXX XXXXXX XXXXXXX
+SET CLA TY R0.    R1.    R2.    INST
+```
 
 ## 寄存器或栈空间
 
